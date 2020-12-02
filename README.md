@@ -22,6 +22,6 @@ This python script automates all these tedious tasks to save you many many secon
 ### Todo
 - [x] Stop the program after a certain time if the specified image is not found on the screen within that time period, so that it does not run indefinitely.
 
-- [ ] Use os module to find the Zoom application instead of searching for the Zoom application icon on the Desktop
+- [x] Use os module to find the Zoom application instead of searching for the Zoom application icon on the Desktop
 
 - [ ] Add a _*"Input Screenshot"*_ and a _*Demo of Working*_ (GIF/Video) to the `README.md` file

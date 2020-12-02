@@ -1,5 +1,7 @@
 import pyautogui as pag
 import time
+import os
+import subprocess
 
 
 def main():
@@ -48,15 +50,18 @@ def find_zoom():
 
     while zoom_icon_cord == None:
         while (now - start) < 50:   # As long as time elapsed (now - start) is less than 50 seconds, it will keep searching for the image
-            print("Finding Zoom Icon...")
-            zoom_icon_cord = pag.locateCenterOnScreen("all_icons\icon_zoom.png", confidence=0.7)
+            print("Finding Zoom Shortcut...")
+
+            # Zoom.exe is located in a subfolder of the user's profile folder —normally C:\Users\USERNAME\AppData\Roaming\Zoom\bin\
+            zoom_icon_cord = os.path.join(os.path.join(os.environ['USERPROFILE']), 'AppData', "Roaming", "Zoom", "bin", "Zoom.exe")
             now = time.time()   # Gets the current time (in seconds) to update the time eleapsed 
 
             # If the image is found, then do...
             if zoom_icon_cord != None:
-                pag.click(zoom_icon_cord, clicks=2)
-                print("\nFound Zoom Icon!\n")
-                return True
+                if os.path.isfile(zoom_icon_cord):
+                    subprocess.Popen(zoom_icon_cord)
+                    print("\nFound Zoom Icon!\n")
+                    return True
 
         # If time elapsed is greater than 50 sec, it stops the current function (find_zoom()) by returning False
         else:
@@ -73,9 +78,9 @@ def find_join_plus_icon():
     while join_plus_cord == None:
         while (now - start) < 50:
             print("Finding Join Plus Icon...")
-            join_plus_cord = pag.locateCenterOnScreen("all_icons\join_plus_icon.png", confidence=0.8)
+            join_plus_cord = pag.locateCenterOnScreen(r"all_icons\join_plus_icon.png", confidence=0.8)
             now = time.time()
-
+            
             if join_plus_cord != None:
                 pag.click(join_plus_cord)
                 print("\nFound Join Plus Icon! \n")
@@ -93,13 +98,13 @@ def find_join_meeting_window(meeting_id):
 
     while join_grey_btn == None:
         while (now - start) < 50:
-            join_grey_btn = pag.locateOnScreen("all_icons\join_grey_btn.png", confidence=0.7)
+            join_grey_btn = pag.locateOnScreen(r"all_icons\join_grey_btn.png", confidence=0.7)
             now = time.time()
 
             if join_grey_btn != None:
                 pag.write(meeting_id, interval=0.07)
                 print("Finished typing Meeting ID \n")
-                pag.click(pag.locateCenterOnScreen("all_icons\join_btn.png", confidence=0.7))
+                pag.click(pag.locateCenterOnScreen(r"all_icons\join_btn.png", confidence=0.7))
                 #pag.press("enter")
                 return True
         else:
@@ -116,14 +121,14 @@ def find_meeting_password_window(meeting_pswd):
 
     while join_meet_grey_btn == None and m_p_img == None:
         while (now - start) < 50:
-            join_meet_grey_btn = pag.locateCenterOnScreen("all_icons\join_meeting_grey_btn.png", confidence=0.7)
-            m_p_img = pag.locateCenterOnScreen("all_icons\m_password_img.png", confidence=0.7)
+            join_meet_grey_btn = pag.locateCenterOnScreen(r"all_icons\join_meeting_grey_btn.png", confidence=0.7)
+            m_p_img = pag.locateCenterOnScreen(r"all_icons\m_password_img.png", confidence=0.7)
             now = time.time()
 
             if join_meet_grey_btn != None:
                 pag.write(meeting_pswd)
                 print("Finished typing Meeting Password \n")
-                pag.click(pag.locateCenterOnScreen("all_icons\join_meeting_btn.png", confidence=0.7))
+                pag.click(pag.locateCenterOnScreen(r"all_icons\join_meeting_btn.png", confidence=0.7))
                 #pag.click("enter")
                 return True
         
